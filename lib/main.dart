@@ -11,38 +11,40 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      height: 80.0, // 单位是逻辑上的像素（并非真实的像素，类似于浏览器中的像素）
-      padding:new EdgeInsets.fromLTRB(0, 25, 0, 0),
+      width: MediaQuery.of(context).size.width-30,
+      padding:new EdgeInsets.fromLTRB(0, 0,0, 0),
       decoration: new BoxDecoration(color: Colors.white),
+        child: new Column(
+            children: <Widget>[
+              new Expanded(
+                child: new SwiperView()
+              ),
+              new Expanded(
+                child: new Text('Hello, world!',style:new TextStyle(fontSize: 20)),
 
+              ),
+              new Expanded(
+                child: new Container(
+                  width: 700,
+                  height: 300,
+                  color: Color.fromARGB(255, 238, 238, 238),
+                ),
+              ),
+              new Expanded(
+                child: new Container(
+                  width: 700,
+                  height: 1200,
+                  color: Colors.red
+                ),
+              ),
+
+            ]
+        )
       // Row 是水平方向的线性布局（linear layout）
-      child: new Row(
+//      child: new SwiperView()
         //列表项的类型是 <Widget>
-        children: <Widget>[
-          new IconButton(
-            icon: new Icon(Icons.menu),
-            tooltip: 'Navigation menu',
-            padding: const EdgeInsets.all(10),
-            onPressed: null, // null 会禁用 button
-          ),
-          // Expanded expands its child to fill the available space.
-          new Expanded(
-            child: Container(
 
-              child: title,
-            ),
 
-          ),
-          new IconButton(
-            icon: new Icon(Icons.search,color:  Colors.black),
-            tooltip: 'Search',
-            onPressed: null,
-            iconSize: 30,
-            padding:new EdgeInsets.fromLTRB(0, 0, 20, 0),
-          ),
-
-        ],
-      ),
     );
   }
 }
@@ -96,12 +98,27 @@ class MyScaffold2 extends StatelessWidget {
 
 }
 
+
 void main() {
   runApp(new MaterialApp(
     title: 'My app', // used by the OS task switcher
-    home: new SwiperView(),
+    home: new MyAppFr(),
   ));
 }
+//class MyAppBar1 extends StatefulWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return new Container(
+//      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+//      width: MediaQuery.of(context).size.width,
+////        height: 200,
+//      child: new SwiperView(),
+////        children: <Widget>[
+////          new Expanded(child: new SwiperView())
+////        ]
+//    );
+//  }
+//}
 class SwiperView extends StatefulWidget {
   @override
   _SwiperViewState createState() => _SwiperViewState();
@@ -137,7 +154,7 @@ class _SwiperViewState extends State<SwiperView> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(title: Text('轮播图'),),
+        appBar: AppBar(title:new Text('轮播图',style: new TextStyle(color:Colors.black87,fontSize:20),),backgroundColor:Colors.white,centerTitle:true,),
         body: ListView(     // 这里使用listView是因为本地写了几组不同样式的展示，太懒了，所以这里就没有改
           children: <Widget>[
             firstSwiperView()
@@ -148,15 +165,16 @@ class _SwiperViewState extends State<SwiperView> {
 
   Widget firstSwiperView() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+//      margin: EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 20),
       width: MediaQuery.of(context).size.width,
-      height: 200,
+      height: 190,
       child: Swiper(
         itemCount: 4,
         itemBuilder: _swiperBuilder,
         pagination: SwiperPagination(
             alignment: Alignment.bottomCenter,
-            margin: const EdgeInsets.fromLTRB(0, 0, 20, 10),
+//            margin: const EdgeInsets.fromLTRB(0, 0, 20, 10),
             builder: DotSwiperPaginationBuilder(
                 color: Colors.black54,
                 activeColor: Colors.white
@@ -175,3 +193,35 @@ class _SwiperViewState extends State<SwiperView> {
   }
 }
 
+
+class MyAppFr extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final title = 'Basic List';
+
+    return new MaterialApp(
+      title: title,
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text(title),
+        ),
+        body: new ListView(
+          children: <Widget>[
+            new ListTile(
+              leading: new Icon(Icons.map),
+              title: new Text('Map'),
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo),
+              title: new Text('Album'),
+            ),
+            new ListTile(
+              leading: new Icon(Icons.phone),
+              title: new Text('Phone'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
